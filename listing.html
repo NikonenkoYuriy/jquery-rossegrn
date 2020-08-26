@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="css/main.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--start wrapper-->
+    <div class="wrapper" id="wrapper">
+
+        <!--start header-->
+        <header class="header" id="header">
+            <a class="logo" href="/">
+                <img class="logo__img" src="images/logo.svg" alt="">
+                <span class="logo__text">
+                    Россегрн
+                </span>
+            </a>
+            <nav class="menu">
+                <ul class="menu__list">
+                    <li class="menu__list-item">
+                        <a href="#" class="menu__list-link menu__list-link--search">
+                            <img src="images/icons/search-header.svg" alt="">
+                            Найти объект
+                        </a>
+                    </li>
+                    <li class="menu__list-item">
+                        <a href="#" class="menu__list-link menu__list-link--extract">
+                            Выписки и цены
+                        </a>
+                    </li>
+                    <li class="menu__list-item">
+                        <a href="#" class="menu__list-link menu__list-link--questions">
+                            Вопросы и ответы
+                        </a>
+                    </li>
+                    <li class="menu__list-item ">
+                        <a href="#" class="menu__list-link menu__list-link--orders">
+                            Мои заказы
+                        </a>
+                    </li>
+                    <li class="menu__list-item">
+                        <a href="#" class="menu__list-link menu__list-link--basket">
+                            <div class="menu__basket-img-block">
+                                <div class="basket-mobile__total">2</div>
+                                <img class="menu__basket-img" src="images/basket.svg" alt="">
+                            </div>
+                            <span>Корзина</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="menu__support">
+                    Техническия поддержка сервиса: <br>
+                    <a class="menu__support-link" href="mailto:support@rossegrn.info">support@rossegrn.info</a>
+                </div>
+            </nav>
+            <div class="mobile-icons">
+                <a class="search-header" href="#">
+                    <img class="search-header__img" src="images/icons/search-header.svg" alt="">
+                </a>
+                <a class="basket-mobile basket-tab" href="#" >
+                    <div class="basket-mobile__total">2</div>
+                    <img class="basket-mobile__img" src="images/basket.svg" alt="">
+                </a>
+            </div>
+            
+            <button class="nav-toggle">
+                <span class="bar-top"></span>
+                <span class="bar-mid"></span>
+                <span class="bar-bot"></span>
+            </button>
+        </header>
+        <!--end header-->
+
+        <!--start main-->
+        <main class="main" id="main">
+
+           <div class="container">
+            <ul class="listing" style="margin-top: 300px;">
+                <li><a target="_blank" href="index.html">Главная</a></li>
+                <li><a target="_blank" href="orders.html">Заказы</a></li>
+                <li><a target="_blank" href="orders-empty.html">Пустые заказы</a></li>
+                <li><a target="_blank" href="oferta.html">Оферта</a></li>
+                <li><a target="_blank" href="privacy.html">Политика</a></li>
+            </ul>
+
+           </div>
+        </main>
+        <!--end main-->
+            
+        <!--start footer-->
+        <footer class="footer" id="footer">
+            <div class="footer__inner">
+                <div class="footer__container">
+                    <a class="logo footer__logo" href="/">
+                        <img class="logo__img" src="images/logo.svg" alt="">
+                        <span class="logo__text">
+                            Россегрн
+                        </span>
+                    </a>
+                    <div class="footer__text footer__subtitle footer__text--grey">
+                        Заказ выписок из ЕГРН,
+                        предоставление онлайн-сведений
+                    </div>
+                    <a class="footer__link" href="#">
+                        Обработка персональных данных
+                    </a>
+                    <a class="footer__link" href="#">
+                        Публичная оферта
+                    </a>
+                </div>
+                <div class="footer__container">
+                    <p class="footer__text">
+                        Время получения выписки: <br>
+                        от 5 минут до 3 суток
+                    </p>
+                    <p class="footer__text footer__text--medium">
+                        Время получения выписки зависит <br>
+                        от скорости обработки запроса Росреестром
+                    </p>
+                    <p class="footer__text">
+                        Если Вы не получили выписку <br>
+                        по прошествии 3 рабочих дней, <br>
+                        мы вернём Вам деньги
+                    </p>
+                </div>
+                <div class="footer__container">
+                    <p class="footer__text">
+                        Техническия поддержка сервиса: <br>
+                        <a class="footer__link" href="mailto:support@rossegrn.info">
+                            support@rossegrn.info
+                        </a>
+                    </p>
+                    <p class="footer__text">
+                        Сервис не является органом государственной власти <br>
+                        или ее ведомственным подразделением.
+                    </p>
+                    <p class="footer__text">
+                        Сервис не изготавливает выписки из ЕГРН, а оказывает <br>
+                        услугу онлайн-заказа выписок из Росреестра.
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <!--end footer-->
+
+    </div>
+    <!--end wrapper-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/libs.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
