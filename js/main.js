@@ -83,19 +83,14 @@ $('.tab').on('click', function(e){
        }
 });
 
-$('.search-form__input').focus(function(){
-    $('.search-form__input-list').show()
-});
+
 $(document).on('click', function(e) {
     if (!$(e.target).closest(".search-form__input").length) {
       $('.search-form__input-list').hide();
     }
     e.stopPropagation();
   });
-$('.search-form__input-list li').click(function(){
-    var text = $(this).text();
-    $('.search-form__input').val(text);
-});
+
 
 $('.search-form__input-list li').click(function () {
     $('.address').removeClass('dn')
@@ -108,41 +103,6 @@ $('.search-form__input-list li').click(function () {
 $('.extract-form__button-add').click(function () {
     $(this).addClass('added')
 });
-
-
-//$(".search-form__input").suggestions({
-//     token: "4c6e33332e10e1bccff49c0cf3f5e7a2326c2755",
-//     type: "ADDRESS",
-//        /* Вызывается, когда пользователь выбирает одну из подсказок */
-//     onSelect: function(suggestion) {
-//            console.log(suggestion);
-//     }
-//});
-
-var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
-var token = "4c6e33332e10e1bccff49c0cf3f5e7a2326c2755";
-var query = "питер";
-
-var options = {
-    method: "POST",
-//    mode: "cors",
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Token " + token
-    },
-    body: JSON.stringify({query: query})
-}
-
-//fetch(url, options)
-//.then(response => response.json())
-//.then(result => console.log(result))
-//.catch(error => console.log("error", error));
-
-fetch('https://cors-anywhere.herokuapp.com/https://ros.devpreview.info/api/v1/address/get-info?object=23:33:0907011:9')
-.then(response => response.json())
-.then(result => console.log(result))
-.catch(error => console.log("error", error));
 
 
 

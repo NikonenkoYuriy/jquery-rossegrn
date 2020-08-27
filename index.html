@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
     <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/css/suggestions.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/main.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.min.css">
+    
 </head>
 
 <body>
@@ -99,14 +101,8 @@
                                     <input name="search" type="text" class="search-form__input"
                                         placeholder="Введите кадастровый номер или адрес объекта">
                                         
-<!--
-                                    <ul class="search-form__input-list">
-
-                                        <li>г. <span>Ярославль</span>, проспект <span>Ленина</span>, д. <span>10</span>, стр. 1</li>
-                                        <li>г. <span>Ярославль</span>, проспект <span>Ленина</span>, д. <span>10</span>, стр. 1</li>
-                                    </ul>
+                                    <ul class="search-form__input-list"></ul>
                                     
--->
                                 </div>
                                 <button type="button" class="button button--green search-form__button">
                                     <img class="search-form__button-img" src="images/icons/search.svg" alt="">
@@ -244,7 +240,7 @@
                 <div class="container">
                     <div class="search-result__inner">
                         <div class="search-result__number title--underline">
-                            23:33:0907011:9
+                            <span class="search-result__num">23:33:0907011:9</span>
                             <span class="search-result__type">
                                 Земельный участок
                             </span>
@@ -262,7 +258,7 @@
                                         <div class="search-result-item__title">
                                             Площадь
                                         </div>
-                                        <div class="search-result-item__value">
+                                        <div class="search-result-item__value search-result-area">
                                             620 кв. м.
                                         </div>
                                     </div>
@@ -278,7 +274,7 @@
                                         <div class="search-result-item__title">
                                             Статус
                                         </div>
-                                        <div class="search-result-item__value">
+                                        <div class="search-result-item__value search-result-status">
                                             Ранее учтенный
                                         </div>
                                     </div>
@@ -294,7 +290,7 @@
                                         <div class="search-result-item__title">
                                             Дата учета
                                         </div>
-                                        <div class="search-result-item__value">
+                                        <div class="search-result-item__value search-result-date">
                                             12.05.2012
                                         </div>
                                     </div>
@@ -307,7 +303,7 @@
                                 <td class="search-result__td">
                                     Кадастровый номер
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result__num">
                                     23:33:0907011:9
                                 </td>
                             </tr>
@@ -315,7 +311,7 @@
                                 <td class="search-result__td">
                                     Адрес
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result__address">
                                     р-н Туапсинский, тер Небугское сельское поселение, с Агой, тер СТ Машиностроитель, д
                                     уч.№198
                                 </td>
@@ -324,7 +320,7 @@
                                 <td class="search-result__td">
                                     Кадастровая стоимость
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result_cadastral-value">
                                     1700089.6 руб. (Земля)
                                 </td>
                             </tr>
@@ -332,7 +328,7 @@
                                 <td class="search-result__td">
                                     Категория
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result_category">
                                     Земли сельскохозяйственного назначения
                                 </td>
                             </tr>
@@ -340,7 +336,7 @@
                                 <td class="search-result__td">
                                     Разрешенное использование
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result_permitted-use">
                                     Для садоводства (для ведения гражданами садоводства и огородничества)
                                 </td>
                             </tr>
@@ -348,7 +344,7 @@
                                 <td class="search-result__td">
                                     Дата определения стоимости
                                 </td>
-                                <td class="search-result__td">
+                                <td class="search-result__td search-result_date">
                                     -
                                 </td>
                             </tr>
@@ -358,6 +354,84 @@
                 </div>
             </div>
             <!--end search-result-->
+            
+           <section class="extracts content dn">
+                <div class="container">
+                    <h2 class="section-title extracts__title">Выберите тип выписки</h2>
+                    <p class="show-result extracts__subtitle">Сдидка 20% при заказе обеих справок</p>
+
+                    <form class="extract-form">
+                        <div class="extract-form__inner">
+                            <div class="extract-form-item extract-form__item">
+                                <input id="extract-1" name="extract-1" type="checkbox" class="extract-form-item__input">
+                                <label for="extract-1" class="extract-form-item__label">
+                                    <a href="images/extracs/1.jpg" class="extract-form-item__img-block fancybox" data-fancybox="">
+                                        <img src="images/extracs/1.jpg" alt="" class="extract-form-item__img">
+                                    </a>
+                                    <span class="extract-form-item__text-block">
+                                        <h5 class="extract-form-item__title">
+                                            Об объекте недвижимости
+                                        </h5>
+                                        <span class="extract-form-item__subtitle">
+                                            Основные данные, информация о наличии обременений, ФИО владельца, если есть
+                                        </span>
+
+                                    </span>
+                                    <span class="extract-form-item__container">
+                                        <a href="#" class="extract-form-item__link">
+                                            <img src="images/icons/list.svg" alt="" class="extract-form-item__link-img">
+                                            Посмотреть <br> образец
+                                        </a>
+                                        <span class="extract-form-item__price-block">
+                                            <span class="extract-form-item__oldprice">249 ₽</span>
+                                            <span class="extract-form-item__price">200 ₽</span>
+                                        </span>
+                                    </span>
+
+                                </label>
+                            </div>
+                            <div class="extract-form-item extract-form__item">
+                                <input id="extract-2" name="extract-1" type="checkbox" class="extract-form-item__input">
+                                <label for="extract-2" class="extract-form-item__label">
+                                    <a href="images/extracs/2.jpg" class="extract-form-item__img-block fancybox" data-fancybox="">
+                                        <img src="images/extracs/2.jpg" alt="" class="extract-form-item__img">
+                                    </a>
+                                    <span class="extract-form-item__text-block">
+                                        <h5 class="extract-form-item__title">
+                                            О переходе прав
+                                        </h5>
+                                        <span class="extract-form-item__subtitle">
+                                            История собственников (если есть) по&nbsp;сделкам, совершенным с&nbsp;1998 года
+                                        </span>
+
+                                    </span>
+                                    <span class="extract-form-item__container">
+                                        <a href="#" class="extract-form-item__link">
+                                            <img src="images/icons/list.svg" alt="" class="extract-form-item__link-img">
+                                            Посмотреть <br> образец
+                                        </a>
+                                        <span class="extract-form-item__price-block">
+                                            <span class="extract-form-item__oldprice">249 ₽</span>
+                                            <span class="extract-form-item__price">200 ₽</span>
+                                        </span>
+                                    </span>
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="extract-form__button-block">
+                            <button type="submit" class="button button--blue extract-form__button">продолжить</button>
+                            <div class="extract-form__payment">
+                                Всего к оплате <span class="extract-form__payment-total"> <br> 400</span> ₽
+                            </div>
+                            <button type="button" class="button extract-form__button-add">
+                                
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            
 
         </div>
         <!--end hero-->
@@ -421,12 +495,20 @@
     </div>
     <!--end wrapper-->
     
+    <div class="popup-loader">
+    	<img src="images/loader.svg" class="popup-loader-img" alt="loader">
+    	<h4 class="popup-loader-title">Производим поиск...</h4>
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/js/jquery.suggestions.min.js"></script>
-    
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="js/error.js"></script>
     <script src="js/libs.min.js"></script>
+    <script src="js/fetch.js"></script> 
     <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+    
 </body>
 
 </html>
