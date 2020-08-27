@@ -29,16 +29,6 @@ function  changeCssInd() {
 window.onload  = changeCssInd;
 
 
-$('.search-form__button').on('click', function(){
-    // $('.content').removeClass('dn')
-    $('.advantages').addClass('show-result')
-    $('.search-result').addClass('show-result')
-    $('.extracts').addClass('show-result').removeClass('dn')
-    $('.extracts .container').removeClass('dn')
-    $('.extract-form').removeClass('dn')
-    $('.address').addClass('dn')
-    // $('.extracts-item').addClass('show-result')
-});
 
 $('.nav-toggle').on('click', function(){
     $(this).toggleClass('opened')
@@ -46,45 +36,6 @@ $('.nav-toggle').on('click', function(){
     $('.mobile-icons').fadeToggle ()
 });
 
-$('.menu__list-link').on('click', function(e) {
-    $('.extracts').removeClass('show-result')
-    $('.extracts .container').removeClass('dn')
-    $('.extract-form').addClass('dn')
-    
-    var w =  document.body.clientWidth; 
-    if (w <=  '650' )
-    {
-        $('.menu').slideToggle()
-        $('.nav-toggle').toggleClass('opened')
-        $('.mobile-icons').fadeToggle ()
-    }
-    
-});
-
-$('.menu__list-link--extract').on('click', function(e) { 
-    e.preventDefault(); 
-    $('.menu__list-link').removeClass('active')
-    $(this).addClass('active')
-    $('.content').addClass('dn')
-    $('.price').removeClass('dn')
-    $('.extracts').removeClass('dn').addClass('max-width')
-    $('.how-work--last').addClass('dn')
-    // $('#content').load('index.html #content');
-});
-
-
-
-$('.menu__list-link--questions').on('click', function(e) { 
-    e.preventDefault(); 
-    $('.menu__list-link').removeClass('active')
-    $(this).addClass('active')
-    $('.content').addClass('dn')
-    $('.questions').removeClass('dn')
-    $('.how-work').removeClass('dn')
-    $('.location').removeClass('dn')    
-    $('.extracts').removeClass('max-width')
-    $('.how-work--last').addClass('dn')
-});
 
 
 $('.basket-tab').on('click', function(e) { 
@@ -93,26 +44,6 @@ $('.basket-tab').on('click', function(e) {
     $('.menu__list-link--basket').addClass('active')
     $('.content').addClass('dn')
     $('.basket').removeClass('dn')
-    $('.how-work').removeClass('dn')
-    $('.how-work--last').addClass('dn')
-});
-
-$('.menu__list-link--basket').on('click', function(e) { 
-    e.preventDefault(); 
-    $('.menu__list-link').removeClass('active')
-    $(this).addClass('active')
-    $('.content').addClass('dn')
-    $('.basket').removeClass('dn')
-    $('.how-work').removeClass('dn')
-    $('.how-work--last').addClass('dn')
-});
-
-$('.menu__list-link--orders').on('click', function(e) { 
-    e.preventDefault(); 
-    $('.menu__list-link').removeClass('active')
-    $(this).addClass('active')
-    $('.content').addClass('dn')
-    $('.order-login').removeClass('dn')
     $('.how-work').removeClass('dn')
     $('.how-work--last').addClass('dn')
 });
@@ -179,7 +110,39 @@ $('.extract-form__button-add').click(function () {
 });
 
 
+//$(".search-form__input").suggestions({
+//     token: "4c6e33332e10e1bccff49c0cf3f5e7a2326c2755",
+//     type: "ADDRESS",
+//        /* Вызывается, когда пользователь выбирает одну из подсказок */
+//     onSelect: function(suggestion) {
+//            console.log(suggestion);
+//     }
+//});
 
+var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+var token = "4c6e33332e10e1bccff49c0cf3f5e7a2326c2755";
+var query = "питер";
+
+var options = {
+    method: "POST",
+//    mode: "cors",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token " + token
+    },
+    body: JSON.stringify({query: query})
+}
+
+//fetch(url, options)
+//.then(response => response.json())
+//.then(result => console.log(result))
+//.catch(error => console.log("error", error));
+
+fetch('https://cors-anywhere.herokuapp.com/https://ros.devpreview.info/api/v1/address/get-info?object=23:33:0907011:9')
+.then(response => response.json())
+.then(result => console.log(result))
+.catch(error => console.log("error", error));
 
 
 

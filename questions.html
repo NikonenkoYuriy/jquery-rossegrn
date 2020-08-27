@@ -13,7 +13,7 @@
     <!--start wrapper-->
     <div class="wrapper" id="wrapper">
 
-        <!--start header-->
+         <!--start header-->
         <header class="header" id="header">
             <a class="logo" href="/">
                 <img class="logo__img" src="images/logo.svg" alt="">
@@ -24,28 +24,28 @@
             <nav class="menu">
                 <ul class="menu__list">
                     <li class="menu__list-item">
-                        <a href="#" class="menu__list-link menu__list-link--search">
+                        <a href="index.html" class="menu__list-link">
                             <img src="images/icons/search-header.svg" alt="">
                             Найти объект
                         </a>
                     </li>
                     <li class="menu__list-item">
-                        <a href="#" class="menu__list-link menu__list-link--extract">
+                        <a href="price.html" class="menu__list-link">
                             Выписки и цены
                         </a>
                     </li>
                     <li class="menu__list-item">
-                        <a href="#" class="menu__list-link menu__list-link--questions">
+                        <a href="questions.html" class="menu__list-link active">
                             Вопросы и ответы
                         </a>
                     </li>
                     <li class="menu__list-item ">
-                        <a href="#" class="menu__list-link menu__list-link--orders">
+                        <a href="order-login.html" class="menu__list-link">
                             Мои заказы
                         </a>
                     </li>
                     <li class="menu__list-item">
-                        <a href="#" class="menu__list-link menu__list-link--basket">
+                        <a href="basket.html" class="menu__list-link">
                             <div class="menu__basket-img-block">
                                 <div class="basket-mobile__total">2</div>
                                 <img class="menu__basket-img" src="images/basket.svg" alt="">
@@ -68,7 +68,7 @@
                     <div class="basket-mobile__total">2</div>
                     <img class="basket-mobile__img" src="images/basket.svg" alt="">
                 </a>
-
+                
             </div>
             <button class="nav-toggle">
                 <span class="bar-top"></span>
@@ -76,7 +76,7 @@
                 <span class="bar-bot"></span>
             </button>
 
-
+            
         </header>
         <!--end header-->
 
@@ -315,87 +315,8 @@
             </section>
             <!--end basket-->
 
-            <!--start order-login-->
-            <section class="order-login content dn">
-                <div class="order-login__inner">
-                    <div class="order-login__img-block">
-                        <img class="order-login__img" src="images/user-login.svg" alt="">
-
-                    </div>
-                    <form action="" class="order-login__form">
-                        <div class="order-login__text">
-                            Авторизируйтесь, чтобы посмотреть заказы
-                        </div>
-                        <div class="order-login__form-item">
-                            <input type="text" class="order-login__input" placeholder="Ваша эл. почта">
-                            <button type="submit" class="button button--blue order-login__button">
-                                Войти
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-            <!--end order-login-->
-
-            <!--start price-->
-            <section class="price content dn">
-                <div class="container">
-                    <h2 class="section-title price__title">
-                        Цена зависит от количества заказанных вписок
-                    </h2>
-                    <div class="price__subtitle">
-                        Скидка накопительная и привязывается к вашей электронной почте, чем больше вы покупаете выписок,
-                        тем выше скидка
-                    </div>
-                    <div class="price__row">
-                        <div class="price__item">
-                            <div class="price__item-total">
-                                1-2 выписки
-                            </div>
-                            <div class="price__item-price">
-                                249 ₽
-                            </div>
-                        </div>
-                        <div class="price__item">
-                            <div class="price__item-total">
-                                3-10 выписок
-                            </div>
-                            <div class="price__item-price">
-                                199 ₽
-                            </div>
-                        </div>
-                        <div class="price__item">
-                            <div class="price__item-total">
-                                11-50 выписок
-                            </div>
-                            <div class="price__item-price">
-                                149 ₽
-                            </div>
-                        </div>
-                        <div class="price__item">
-                            <div class="price__item-total">
-                                51-100 выписок
-                            </div>
-                            <div class="price__item-price">
-                                99 ₽
-                            </div>
-                        </div>
-                        <div class="price__item">
-                            <div class="price__item-total">
-                                Больше 100 выписок
-                            </div>
-                            <div class="price__item-price">
-                                59 ₽
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--end price-->
-
             <!--start questions-->
-            <section class="questions content dn">
+            <section class="questions content">
                 <div class="container">
                     <h2 class="section-title questions__title">
                         Вопросы и ответы
@@ -1021,7 +942,7 @@
             <!--end how-work-->
 
             <!--start location-->
-            <section class="location content dn">
+            <section class="location content">
                 <div class="container">
                     <div class="location__inner">
                         <h2 class="section-title location__title title--underline   ">
@@ -1052,145 +973,6 @@
                 </div>
             </section>
             <!--end location-->
-
-            <!--start orders-->
-            <section class="orders content">
-                <div class="container">
-                    <div class="orders__header">
-                        <h2 class="orders__title section-title">Ваши заказы</h2>
-                        <div class="orders__profile-block">
-                            <a href="#" class="orders__profile">
-                                <div class="orders__avatar-block">
-                                    <img class="orders__avatar" src="images/user.svg" alt="">
-
-                                </div>
-                                alexandr5151@yandex.ru
-                            </a>
-                            <a href="#" class="orders__log-out">
-                                <img class="orders__log-out-img" src="images/log-out.svg" alt="">
-                                Выйти
-                            </a>
-                        </div>
-                    </div>
-                    <div class="orders__inner">
-                        <div class="order-item orders__item order-item--wait">
-                            <div class="order-item__text-block">
-                                <div class="order-item__title">
-                                    Заказ № 12341 <br>
-                                    <span class="order-item__title-date">13:45 01.02.20</span>
-                                    <span class="order-item__title-status">Ждёт оплаты</span>
-                                </div>
-                                <div class="order-item__button-block">
-                                    <a href="#" class="button button--blue order-item__payment">
-                                        оплатить
-                                    </a>
-                                    <button class="button order-item__delete">
-                                        удалить
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    23:33:0907011:9 br <span class="order-item__info-title--type">Земельный
-                                        участок</span>
-                                </div>
-                                <div class="order-item__address">
-                                    р-н Туапсинский, тер Небугское сельское поселение, с Агой, тер СТ Машиностроитель, д
-                                    уч.№198
-                                </div>
-                                <div class="order-item__list">
-                                    <div class="order-item__list-item">
-                                        Об объекте недвижимости
-                                    </div>
-                                    <div class="order-item__list-item">
-                                        О переходе прав
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="order-item orders__item order-item--completed">
-                            <div class="order-item__text-block">
-                                <div class="order-item__title">
-                                    Заказ № 12283 <br>
-                                    <span class="order-item__title-date">13:45 01.02.20</span>
-                                    <span class="order-item__title-status">Завершен</span>
-                                </div>
-                                <div class="order-item__button-block">
-
-                                    <button class="button order-item__download-all">
-                                        скачать все выписки
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    23:33:0907011:9 br <span class="order-item__info-title--type">Земельный
-                                        участок</span>
-                                </div>
-                                <div class="order-item__address">
-                                    р-н Туапсинский, тер Небугское сельское поселение, с Агой, тер СТ Машиностроитель, д
-                                    уч.№198
-                                </div>
-                                <div class="order-item__list">
-                                    <div class="order-item__list-item">
-                                        Об объекте недвижимости
-                                        <div class="order-item__list-item-buttons">
-                                            <button class="order-item__list-item-download">
-                                                pdf
-                                            </button>
-                                            <button class="order-item__list-item-download">
-                                                Zip
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="order-item__list-item">
-                                        О переходе прав
-                                        <div class="order-item__list-item-buttons">
-                                            <button class="order-item__list-item-download">
-                                                pdf
-                                            </button>
-                                            <button class="order-item__list-item-download">
-                                                Zip
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="order-item orders__item order-item--closed">
-                            <div class="order-item__text-block">
-                                <div class="order-item__title">
-                                    Заказ № 12283 <br>
-                                    <span class="order-item__title-date">13:45 01.02.20</span>
-                                    <span class="order-item__title-status">Отменен</span>
-                                </div>
-                                <div class="order-item__button-block">
-
-                                    <button class="button order-item__download-all">
-                                        скачать все выписки
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    23:33:0907011:9 br <span class="order-item__info-title--type">Земельный
-                                        участок</span>
-                                </div>
-                                <div class="order-item__address">
-                                    р-н Туапсинский, тер Небугское сельское поселение, с Агой, тер СТ Машиностроитель, д
-                                    уч.№198
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-            <!--end orders-->
 
             <!--start how-work-->
             <section class="how-work content how-work--last">
