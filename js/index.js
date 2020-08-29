@@ -1,22 +1,22 @@
-let testObj = {
-    "success": true,
-    "data": {
-        "cadNum": "76:23:010101:62058",
-        "address": "Ярославская область, г.Ярославль, ул.Панина, д.30, кв.36",
-        "type": "Помещение",
-        "area": "76.1 кв. м.",
-        "status": "Ранее учтенный",
-        "registrationDate": "01.07.2012",
-        "cadastralValue": 3268461.52,
-        "category": null,
-        "permittedUse": null,
-        "priceDeterminationDate": null,
-        "allowedDocs": [
-            "main_characteristics",
-            "transfer_rights"
-        ]
-    }
-};
+//let testObj = {
+//    "success": true,
+//    "data": {
+//        "cadNum": "76:23:010101:62058",
+//        "address": "Ярославская область, г.Ярославль, ул.Панина, д.30, кв.36",
+//        "type": "Помещение",
+//        "area": "76.1 кв. м.",
+//        "status": "Ранее учтенный",
+//        "registrationDate": "01.07.2012",
+//        "cadastralValue": 3268461.52,
+//        "category": null,
+//        "permittedUse": null,
+//        "priceDeterminationDate": null,
+//        "allowedDocs": [
+//            "main_characteristics",
+//            "transfer_rights"
+//        ]
+//    }
+//};
 
 
 let urlDadata = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address",
@@ -41,32 +41,34 @@ optionsPOST.headers.Authorization = "Token " + token;
 
 let stopTimUpdateTitle = null,
 	startTitle = 'Производим поиск...',
-	updateTitle = 'Длительное ожидание ответа. Переотправляем запрос…';
+	updateTitle = 'Длительное ожидание ответа. Переотправляем запрос…',
+	updateData = new UpdateDataLocalStorage('items');
 
-let getDataDevpreview = ( text ) => { 
-	getDataAPI( urlCors + urlDevpreview + '?' + text, optionsGET )
-		.then( ({ data }) => {
-		    
-			if (+data.status >= 200 && +data.status < 300 ) {
-				
-			}
-			else if ( +data.status >= 400 && +data.status < 500 ) {
-				showErrorMessage ('errorUser');
-			}
-			else if ( +data.status >= 500 ) {
-				showErrorMessage ('serverError');
-			}
-			
-			showBoxSearchResult ( testObj.data );
-		
-		})
-		.catch( error => showErrorMessage ('errorUnknown'))
-		.finally(() => {
-			clearTimeout(stopTimUpdateTitle);
-			hidePopupLoader ();
-			updateTitlePopupLoader (startTitle)
-		});
-}
+	let getDataDevpreview = ( text ) => { 
+		getDataAPI( urlCors + urlDevpreview + '?' + text, optionsGET )
+			.then( ( response ) => {
+				//console.log(response);
+				if ( response.success ) {
+					showBoxSearchResult ( response.data );
+					checkIfThereIsDataInLocalStorage(response.data);
+					createDataDoc ( response.data );
+					showDocumentOptions ( response.data.allowedDocs ); 
+
+				}
+				else if ( +response.data.status >= 400 && +response.data.status < 500 ) {
+					showErrorMessage ('errorUser');
+				}
+				else if ( +response.data.status >= 500 ) {
+					showErrorMessage ('serverError');
+				}
+			})
+			.catch( error => showErrorMessage ('errorUnknown'))
+			.finally(() => {
+				clearTimeout(stopTimUpdateTitle);
+				hidePopupLoader ();
+				updateTitlePopupLoader (startTitle)
+			});
+	}
 
 let getDataAddress = ( text ) => {
 	optionsPOST.body = JSON.stringify({query: text });
@@ -75,6 +77,41 @@ let getDataAddress = ( text ) => {
 			let listElem = addListAddress (result.suggestions);
 			updateListAddress (listElem.join(' '));
 		})
+}
+
+let objectDataDoc = {};
+
+let createDataDoc = ( data ) => {
+	objectDataDoc.type = data.type;
+	objectDataDoc.address = data.address;
+	objectDataDoc.cadastralNumber = data.cadNum;
+	objectDataDoc.documents = data.allowedDocs;
+}
+
+let updateDataLocalStorage = ( _this ) => {
+	
+	if (_this.hasClass('added')) {
+		updateData.setDataLocalStorage (objectDataDoc);
+	} else {
+		updateData.removeDataArrau (objectDataDoc);
+	}
+	
+}
+
+let extractFormButtonAdd = $('.extract-form__button-add'),
+	extractFormButton = $('.extract-form__button'),
+	itemOldprice = $('.extract-form-item__oldprice');
+
+let checkIfThereIsDataInLocalStorage = ( data ) => {
+	let obj = updateData.returnObjectLS( data );
+	if ( obj !== undefined ) {
+		selectDocumentBox ( obj.documents );
+		addClassElem ( extractFormButtonAdd, 'added');
+		removeClassElem ( extractFormButton, 'dn');
+	}
+	else {
+		selectDocumentBox ( data.allowedDocs );
+	}
 }
 
 let addListAddress = (data) => data.map( obj => `<li>${obj.value}<li>`);
@@ -91,78 +128,79 @@ searchFormInput.on('input', function (e) {
 	
 	if (value === '') {
 		updateListAddress ();
-		//flagGetAddress = true; 
-		clearTimeout(stopTim);
+		flagGetAddress = true; 
 		return;
 	}
 	
 	if (!pattern.test(value) && value !== " ") {
 		
-		//if (flagGetAddress) {
-		clearTimeout(stopTim);
-		stopTim = setTimeout(()=>{
-			getDataAddress (value);
-			//flagGetAddress = true;
-		}, 200);
-			//flagGetAddress = false;
-		//}
-		
+		if (flagGetAddress) {
+			stopTim = setTimeout(()=>{
+				getDataAddress (value);
+				flagGetAddress = true;
+			}, 200);
+			flagGetAddress = false;
+		}
 	} 
 	
 });
 
-searchFormInput.focus(function(){
-    searchFormInputList.show()
+searchFormInput.on('focus', function(){
+    searchFormInputList.show();
+	
 });
 
-searchFormInputList.on('click', 'li', function(e){
-    let text = $(e.target).text();
-    searchFormInput.val(text);
+searchFormInput.on('input', function(){
+	hideAdditionalBoxWithInformation ();
+});
+
+searchFormInputList.on('click', 'li', (e) => {
+    searchFormInput.val( $(e.target).text() );
 });
 
 
-let updateListAddress = (content = '') => {
-	let value = searchFormInput.val().trim();
-	if (value === '') content = '';
-	searchFormInputList.get(0).innerHTML = content;
-}
+	let updateListAddress = (content = '') => {
+		let value = searchFormInput.val().trim();
+		if (value === '') content = '';
+		searchFormInputList.get(0).innerHTML = content;
+	}
 
 let searchFormButton = $('.search-form__button');
 
-searchFormButton.on('click', function(e){
+searchFormButton.on('click', (e) => {
 	let value = searchFormInput.val();
     if (value === '') return;
 	getDataDevpreview ( 'object='+encodeURI(value) );
 	showPopupLoader();
+	runTextUpdates();
 	updateTitlePopupLoader ();
 });
 
 let popupLoader = $('.popup-loader'),
 	popupLoaderTitle = $('.popup-loader-title');
 
-let showPopupLoader = () => {
-	popupLoader.fadeIn(400).css('display', 'flex');
-}
+	let showPopupLoader = () => {
+		popupLoader.fadeIn(400).css('display', 'flex');
+	}
 
-let updateTitlePopupLoader = ( text ) => {
-	popupLoaderTitle.text( text );
-}
+	let updateTitlePopupLoader = ( text ) => {
+		popupLoaderTitle.text( text );
+	}
 
-let hidePopupLoader = () => {
-	popupLoader.fadeOut(400);
-}
+	let hidePopupLoader = () => {
+		popupLoader.fadeOut(400);
+	}
 
-let runTextUpdates = () => {
-	stopTimUpdateTitle = setTimeout(()=> {
-		updateTitlePopupLoader (updateTitle);
-	}, 15000)
-}
+	let runTextUpdates = () => {
+		stopTimUpdateTitle = setTimeout(()=> {
+			updateTitlePopupLoader (updateTitle);
+		}, 15000)
+	}
 
 let searchResult = $('.search-result');
-let extracts = $('.extracts.content');
 
 let showBoxSearchResult = ( data ) => {
-	console.log(data);
+
 	$('.search-result__num').text(data.cadNum);
 	$('.search-result__type').text(data.type);
 	$('.search-result__address').text(data.address);
@@ -173,6 +211,166 @@ let showBoxSearchResult = ( data ) => {
 	$('.search-result_permitted-use').text(data.permittedUse);
 	$('.search-result_cadastral-value').text(data.cadastralValue + ' руб.');
 
-	extracts.fadeIn(400);
 	searchResult.fadeIn(400);
 }
+
+let titleNoDoc = $('.title-no-doc'),
+	labelExtract1 = $('[for="extract-1"]'),
+	labelExtract2 = $('[for="extract-2"]'),
+	inputExtract1 = $('#extract-1'),
+	inputExtract2 = $('#extract-2'),
+	containerDoc = $('.container-doc');
+
+let showDocumentOptions = ( docs ) => {
+	
+	addClassElem ( titleNoDoc, 'dn');
+	addClassElem ( containerDoc, 'dn');
+	
+	if ( docs.length === 0 ) {
+		removeClassElem ( titleNoDoc, 'dn');
+	} else {
+		removeClassElem ( containerDoc, 'dn');
+		showDocumentBox ( docs );
+	}
+}
+
+let showDocumentBox = ( docs ) => {
+
+	if (docs.includes('main_characteristics')) {
+		removeClassElem ( labelExtract1, 'dn');
+	}
+	
+	if (docs.includes('transfer_rights')) {
+		removeClassElem ( labelExtract2, 'dn');
+	}
+	
+}
+
+let selectDocumentBox = ( docs ) => {
+	inputExtract1.get(0).checked = false;
+	inputExtract2.get(0).checked = false;
+	
+	if (docs.includes('main_characteristics')) {
+		inputExtract1.get(0).checked = true;
+	}
+	
+	if (docs.includes('transfer_rights')) {
+		inputExtract2.get(0).checked = true;
+	}
+	
+	updateBoxDocs();
+	
+}
+
+inputExtract1.on('change', (e) => {
+	updateBoxDocs();
+});
+
+inputExtract2.on('change', (e) => {
+	updateBoxDocs();
+});
+
+let updateBoxDocs = () => {
+	recalculatePrice ();
+	updateViewBoxDocs ();
+}
+
+let extractFormPaymentTotal = $('.extract-form__payment-total'),
+	itemPrice = $('.extract-form-item__price'),
+	someElem = null,
+	everyElem = null,
+	onClickBtn = true,
+	total = 0,
+	costDoc = 249;
+
+let recalculatePrice = () => {
+	
+	let inputChanges = [inputExtract1.get(0).checked, inputExtract2.get(0).checked];
+	
+	let arr = [];
+	if ( inputExtract1.get(0).checked ) arr.push('main_characteristics');
+	if ( inputExtract2.get(0).checked ) arr.push('transfer_rights');
+	objectDataDoc.documents = arr;
+	
+	someElem = inputChanges.some( elem => elem ),
+	everyElem = inputChanges.every( elem => elem );
+	
+	if ( someElem && everyElem ) {
+		costDoc = 200;
+		total = costDoc * 2;
+		onClickBtn = true;
+	}
+	else if ( someElem && !everyElem ) {
+		costDoc = 249;
+		total = costDoc;
+		onClickBtn = true;
+	}
+	else {
+		costDoc = 249;
+		total = 0;
+		onClickBtn = false;
+	}
+	
+}
+
+let updateViewBoxDocs = () => {
+	
+	if ( someElem && everyElem ) {
+		removeClassElem ( itemOldprice, 'dn');
+		addClassElem ( extractFormButtonAdd, 'active');
+	}
+	else if ( someElem && !everyElem ) {
+		addClassElem ( itemOldprice, 'dn');
+		addClassElem ( extractFormButtonAdd, 'active');
+	}
+	else {
+		addClassElem ( itemOldprice, 'dn');
+		removeClassElem ( extractFormButtonAdd, 'active');
+	}
+	
+	itemPrice.text(costDoc+' ₽')
+	extractFormPaymentTotal.text(total)
+}
+
+	let hideAdditionalBoxWithInformation = () => {
+
+		searchResult.fadeOut(400);
+		addClassElem ( titleNoDoc, 'dn');
+		addClassElem ( containerDoc, 'dn');
+		addClassElem ( extractFormButton, 'dn');
+		removeClassElem ( extractFormButtonAdd, 'active, added');
+
+	}
+
+
+//updateData.setDataLocalStorage ( { cadastralNumber: 1111122233, key: '111' } );
+//updateData.setDataLocalStorage ( { cadastralNumber: 22222, key: '222' } );
+//updateData.removeDataArrau ( { cadastralNumber: 22222, key: '222' } );
+//updateData.setDataLocalStorage ( { cadastralNumber: 33333 } );
+//updateData.setDataLocalStorage ( { cadastralNumber: 44444 } );
+
+
+extractFormButtonAdd.on('click', function () {
+    if ( onClickBtn ) {
+		updateBtnAdd($(this));
+		updateDataLocalStorage ($(this));
+	}
+});
+
+let updateBtnAdd = (_this) => {
+	if ( _this.hasClass('added') ) {
+		removeClassElem ( _this, 'added'); 
+		addClassElem ( extractFormButton, 'dn');
+	} else {
+		addClassElem ( _this, 'added');  
+		removeClassElem ( extractFormButton, 'dn');
+	}
+}
+
+
+	let addClassElem = ( elem, addClassElem ) => elem.addClass(addClassElem);
+
+	let removeClassElem = ( elem, remClassElem ) => elem.removeClass(remClassElem);
+
+
+//showDocumentOptions(testObj.data.allowedDocs)

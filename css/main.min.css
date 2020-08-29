@@ -2551,7 +2551,9 @@ button {
 	text-transform: uppercase;
 	font-weight: 500;
 	font-size: 14px;
-	line-height: 26px
+	line-height: 26px;
+	text-align: center;
+	color: #fff;
 }
 
 @media (max-width: 768px) {
@@ -2625,6 +2627,10 @@ button {
 	transition: none
 }
 
+.extract-form__button-add.active {
+	background: #008000;
+}
+
 .extract-form__button-add::after {
 	content: "";
 	position: absolute;
@@ -2694,6 +2700,10 @@ button {
 	background-color: #fff;
 	min-height: 100px;
 	cursor: pointer
+}
+
+.extract-form-item__label.dn {
+	display: none;
 }
 
 .extract-form-item__label:before {
@@ -5785,4 +5795,8 @@ button {
 .popup-loader-title {
 	margin-left: 20px;
 	max-width: 300px;
+}
+
+.title-no-doc {
+	text-align: center;
 }

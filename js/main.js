@@ -1,32 +1,15 @@
-function  changeCssInd() {
-    var w =  document.body.clientWidth;
-        if (w >=  '1000' )
-        {
-			
-			$(function () {
-				$(window).scroll(function () {
-					if ($(this).scrollTop() > 50)
-					{
-						$('#header').addClass('header--white');
-						
-					}
-					else
-					{
-						$('#header').removeClass('header--white');
-						
-					}
-				});
-			
-			});	
-			
-		}
-        else 
-        {
-			$('#header').addClass('header--white').removeClass('ind_header');
-			
-	 };
-};
-window.onload  = changeCssInd;
+let header = $('#header');
+
+$(window).scroll(function () {
+	updateHeader ();								
+});	
+
+let updateHeader = () => {
+	if ($(window).scrollTop() > 50) header.addClass('header--white');
+	else header.removeClass('header--white');
+}
+
+updateHeader ();	
 
 
 
@@ -92,17 +75,15 @@ $(document).on('click', function(e) {
   });
 
 
-$('.search-form__input-list li').click(function () {
-    $('.address').removeClass('dn')
-    $('.advantages').addClass('dn')
-    $('.extracts .container').addClass('dn').removeClass('show-result')
-    $('.extracts').removeClass('show-result')
-    $('.search-result').removeClass('show-result')
-});
+//$('.search-form__input-list li').click(function () {
+//    $('.address').removeClass('dn')
+//    $('.advantages').addClass('dn')
+//    $('.extracts .container').addClass('dn').removeClass('show-result')
+//    $('.extracts').removeClass('show-result')
+//    $('.search-result').removeClass('show-result')
+//});
 
-$('.extract-form__button-add').click(function () {
-    $(this).addClass('added')
-});
+
 
 
 

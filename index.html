@@ -354,9 +354,13 @@
                 </div>
             </div>
             <!--end search-result-->
-            
-           <section class="extracts content dn">
-                <div class="container">
+           
+           
+           <section class="extracts content">
+               	<h2 class="section-title extracts__title title-no-doc dn">
+           			Для данного адреса недоступны выписки
+           		</h2>
+                <div class="container container-doc dn">
                     <h2 class="section-title extracts__title">Выберите тип выписки</h2>
                     <p class="show-result extracts__subtitle">Сдидка 20% при заказе обеих справок</p>
 
@@ -364,7 +368,7 @@
                         <div class="extract-form__inner">
                             <div class="extract-form-item extract-form__item">
                                 <input id="extract-1" name="extract-1" type="checkbox" class="extract-form-item__input">
-                                <label for="extract-1" class="extract-form-item__label">
+                                <label for="extract-1" class="extract-form-item__label dn">
                                     <a href="images/extracs/1.jpg" class="extract-form-item__img-block fancybox" data-fancybox="">
                                         <img src="images/extracs/1.jpg" alt="" class="extract-form-item__img">
                                     </a>
@@ -392,7 +396,7 @@
                             </div>
                             <div class="extract-form-item extract-form__item">
                                 <input id="extract-2" name="extract-1" type="checkbox" class="extract-form-item__input">
-                                <label for="extract-2" class="extract-form-item__label">
+                                <label for="extract-2" class="extract-form-item__label dn">
                                     <a href="images/extracs/2.jpg" class="extract-form-item__img-block fancybox" data-fancybox="">
                                         <img src="images/extracs/2.jpg" alt="" class="extract-form-item__img">
                                     </a>
@@ -420,7 +424,7 @@
                             </div>
                         </div>
                         <div class="extract-form__button-block">
-                            <button type="submit" class="button button--blue extract-form__button">продолжить</button>
+                            <a href="basket.html" type="submit" class="button button--blue extract-form__button dn">продолжить</a>
                             <div class="extract-form__payment">
                                 Всего к оплате <span class="extract-form__payment-total"> <br> 400</span> ₽
                             </div>
@@ -501,12 +505,14 @@
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--    <script src="js/jquery-2.2.4.min.js"></script>-->
 	<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/js/jquery.suggestions.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="js/error.js"></script>
     <script src="js/libs.min.js"></script>
     <script src="js/fetch.js"></script> 
     <script src="js/main.js"></script>
+    <script src="js/UpdateDataLocalStorage.js"></script>
     <script src="js/index.js"></script>
     
 </body>
