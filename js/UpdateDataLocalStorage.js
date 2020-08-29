@@ -34,6 +34,7 @@ class UpdateDataLocalStorage {
 	
 	returnObjectLS ( data ) {
 		let dataLS = this.getDataLocalStorage();
+		if (dataLS === null ) return undefined;
 		return JSON.parse(dataLS).find( item => item.cadastralNumber === data.cadNum)
 	}
 

@@ -24,19 +24,7 @@ let urlDadata = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/ad
 	
 	urlDevpreview = 'https://ros.devpreview.info/api/v1/address/get-info',
 	urlCors = 'https://cors-anywhere.herokuapp.com/';
-	
 
-let optionsGET = {
-    method: "GET",
-    mode: "cors",
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    }
-},
-	optionsPOST = {...optionsGET};
-
-optionsPOST.method = "POST";
 optionsPOST.headers.Authorization = "Token " + token;
 
 let stopTimUpdateTitle = null,
@@ -343,17 +331,11 @@ let updateViewBoxDocs = () => {
 	}
 
 
-//updateData.setDataLocalStorage ( { cadastralNumber: 1111122233, key: '111' } );
-//updateData.setDataLocalStorage ( { cadastralNumber: 22222, key: '222' } );
-//updateData.removeDataArrau ( { cadastralNumber: 22222, key: '222' } );
-//updateData.setDataLocalStorage ( { cadastralNumber: 33333 } );
-//updateData.setDataLocalStorage ( { cadastralNumber: 44444 } );
-
-
 extractFormButtonAdd.on('click', function () {
     if ( onClickBtn ) {
 		updateBtnAdd($(this));
 		updateDataLocalStorage ($(this));
+		updateOrderQuantity ();
 	}
 });
 

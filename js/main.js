@@ -9,7 +9,20 @@ let updateHeader = () => {
 	else header.removeClass('header--white');
 }
 
-updateHeader ();	
+let basketTotal = $('.basket-mobile__total');
+
+let updateOrderQuantity = () => {
+	let items = JSON.parse (localStorage.getItem('items'));
+	if ( items !== null && items.length !== 0 ) {
+		basketTotal.text(items.length);
+		basketTotal.removeClass('dn');
+	} else {
+		basketTotal.addClass('dn');
+	}
+}
+
+updateHeader ();
+updateOrderQuantity ();
 
 
 

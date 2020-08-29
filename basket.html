@@ -47,7 +47,7 @@
                     <li class="menu__list-item">
                         <a href="basket.html" class="menu__list-link active">
                             <div class="menu__basket-img-block">
-                                <div class="basket-mobile__total">2</div>
+                                <div class="basket-mobile__total dn">0</div>
                                 <img class="menu__basket-img" src="images/basket.svg" alt="">
                             </div>
                             <span>Корзина</span>
@@ -94,8 +94,192 @@
                         Подтвердите Email для скидки и нажмите перейти к оплате, <br> чтобы получить выписки.
                     </div>
                     
-                 <div class="list-basket__inner">  
-                    <div class="basket__inner">
+                 <div class="list-basket__inner"></div>     
+                    
+                    
+                    <form action="" class="basket-form basket__form">
+                        <div class="basket-form__title">
+                            Укажите вашу электронную почту
+                        </div>
+                        <div class="basket-form__subtitle">
+                            Если вы уже делали заказ ранее, то будет пересчитана скидка за заказы ранее. Чем больше
+                            выписок вы заказывали, тем больше скидка.
+                        </div>
+                        <div class="basket-form__item">
+                            <div class="basket-form__input">
+                            	<input type="email" name="email" placeholder="Ваша эл. почта">
+                            </div>
+                            <button class="button button--blue basket-form__button">
+
+                            </button>
+                        </div>
+                    </form>
+                    <div class="basket-total basket__total">
+                        <div class="basket-total__text-block">
+                            <div class="basket-total__title">
+                                К оплате <span class="basket-total__title-total">400 ₽</span>
+                            </div>
+                            <p class="basket-total__text">
+                                Пришлем выписку вам на электронную почту. Обычное время выполнения <br> запроса — от
+                                5 минут до 48 часов. Если не получите выписку, вернем деньги.
+                            </p>
+                        </div>
+                        <button class="button button--green basket-total__button" disabled>
+                            Перейти к оплате
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!--end basket-->
+
+            <!--start how-work-->
+            <section class="how-work content how-work--last">
+                <h2 class="section-title how-work__title">
+                    Как работает наш сервис
+                </h2>
+                <div class="how-work__inner">
+                    <div class="how-work__container">
+                        <div class="how-work-item how-work__item">
+                            <img class="how-work-item__img" src="images/how-work/1.svg" alt="">
+                            <div class="how-work-item__text-block">
+                                <div class="how-work-item__title">
+                                    Поиск объекта
+                                </div>
+                                <p class="how-work-item__text">
+                                    Введите кадастровый номер или точный адрес объекта, в окне результатов поиска
+                                    введите
+                                    свою электронную почту ⟶
+                                </p>
+                                <a class="how-work-item__find" href="#">
+                                    Найти объект
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="how-work__container">
+                        <div class="how-work-item how-work__item">
+                            <img class="how-work-item__img" src="images/how-work/2.svg" alt="">
+                            <div class="how-work-item__text-block">
+                                <div class="how-work-item__title">
+                                    Оплата заказа
+                                </div>
+                                <p class="how-work-item__text">
+                                    Стоимость выписки из ЕГРН (об основных характеристиках или о переходе прав)
+                                    составляет <span>всего 249 рублей</span>
+                                </p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="how-work__container">
+                        <div class="how-work-item how-work__item">
+                            <img class="how-work-item__img" src="images/how-work/3.svg" alt="">
+                            <div class="how-work-item__text-block">
+                                <div class="how-work-item__title">
+                                    Получение заказа
+                                </div>
+                                <p class="how-work-item__text">
+                                    После получения ответа из официальной базы Росреестра, выписка будет отправлена вам
+                                    на
+                                    почту в форматах <span>PDF, ZIP с ЭЦП Росреестра</span>
+                                </p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--end how-work-->
+
+        </main>
+        <!--end main-->
+
+    <!--start footer-->
+        <footer class="footer" id="footer">
+            <div class="footer__inner">
+                <div class="footer__container">
+                    <a class="logo footer__logo" href="/">
+                        <img class="logo__img" src="images/logo.svg" alt="">
+                        <span class="logo__text">
+                            Россегрн
+                        </span>
+                    </a>
+                    <div class="footer__text footer__subtitle footer__text--grey">
+                        Заказ выписок из ЕГРН,
+                        предоставление онлайн-сведений
+                    </div>
+                    <a class="footer__link" href="privacy.html">
+                        Обработка персональных данных
+                    </a>
+                    <a class="footer__link" href="oferta.html">
+                        Публичная оферта
+                    </a>
+                </div>
+                <div class="footer__container">
+                    <p class="footer__text">
+                        Время получения выписки: <br>
+                        от 5 минут до 3 суток
+                    </p>
+                    <p class="footer__text footer__text--medium">
+                        Время получения выписки зависит <br>
+                        от скорости обработки запроса Росреестром
+                    </p>
+                    <p class="footer__text">
+                        Если Вы не получили выписку <br>
+                        по прошествии 3 рабочих дней, <br>
+                        мы вернём Вам деньги
+                    </p>
+                </div>
+                <div class="footer__container">
+                    <p class="footer__text">
+                        Техническия поддержка сервиса: <br>
+                        <a class="footer__link" href="mailto:support@rossegrn.info">
+                            support@rossegrn.info
+                        </a>
+                    </p>
+                    <p class="footer__text">
+                        Сервис не является органом государственной власти <br>
+                        или ее ведомственным подразделением.
+                    </p>
+                    <p class="footer__text">
+                        Сервис не изготавливает выписки из ЕГРН, а оказывает <br>
+                        услугу онлайн-заказа выписок из Росреестра.
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <!--end footer-->
+
+    </div>
+    <!--end wrapper-->
+    
+    <div class="popup-loader">
+    	<img src="images/loader.svg" class="popup-loader-img" alt="loader">
+    	<h4 class="popup-loader-title">Отправка данных на сервер...</h4>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="js/libs.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/UpdateDataLocalStorage.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/validateInput.js"></script>
+    <script src="js/error.js"></script>
+    <script src="js/fetch.js"></script>
+    <script src="js/basket.js"></script>
+    
+</body>
+
+</html>
+
+
+<!-- 
+
+  <div class="basket__inner">
                         <div class="search-result__number title--underline">
                             23:33:0907011:9
                             <span class="search-result__type">
@@ -273,171 +457,7 @@
                         </div>
 
                     </div>
-                </div>     
                     
-                    
-                    <form action="" class="basket-form basket__form">
-                        <div class="basket-form__title">
-                            Укажите вашу электронную почту
-                        </div>
-                        <div class="basket-form__subtitle">
-                            Если вы уже делали заказ ранее, то будет пересчитана скидка за заказы ранее. Чем больше
-                            выписок вы заказывали, тем больше скидка.
-                        </div>
-                        <div class="basket-form__item">
-                            <input type="email" class="basket-form__input" placeholder="Ваша эл. почта">
-                            <button class="button button--blue basket-form__button">
-
-                            </button>
-                        </div>
-                    </form>
-                    <div class="basket-total basket__total">
-                        <div class="basket-total__text-block">
-                            <div class="basket-total__title">
-                                К оплате <span class="basket-total__title-total">400 ₽</span>
-                            </div>
-                            <p class="basket-total__text">
-                                Пришлем выписку вам на электронную почту. Обычное время выполнения <br> запроса — от
-                                5 минут до 48 часов. Если не получите выписку, вернем деньги.
-                            </p>
-                        </div>
-                        <button class="button button--green basket-total__button" disabled>
-                            Перейти к оплате
-                        </button>
-                    </div>
-                </div>
-            </section>
-            <!--end basket-->
-
-            <!--start how-work-->
-            <section class="how-work content how-work--last">
-                <h2 class="section-title how-work__title">
-                    Как работает наш сервис
-                </h2>
-                <div class="how-work__inner">
-                    <div class="how-work__container">
-                        <div class="how-work-item how-work__item">
-                            <img class="how-work-item__img" src="images/how-work/1.svg" alt="">
-                            <div class="how-work-item__text-block">
-                                <div class="how-work-item__title">
-                                    Поиск объекта
-                                </div>
-                                <p class="how-work-item__text">
-                                    Введите кадастровый номер или точный адрес объекта, в окне результатов поиска
-                                    введите
-                                    свою электронную почту ⟶
-                                </p>
-                                <a class="how-work-item__find" href="#">
-                                    Найти объект
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="how-work__container">
-                        <div class="how-work-item how-work__item">
-                            <img class="how-work-item__img" src="images/how-work/2.svg" alt="">
-                            <div class="how-work-item__text-block">
-                                <div class="how-work-item__title">
-                                    Оплата заказа
-                                </div>
-                                <p class="how-work-item__text">
-                                    Стоимость выписки из ЕГРН (об основных характеристиках или о переходе прав)
-                                    составляет <span>всего 249 рублей</span>
-                                </p>
-                            </div>
 
 
-                        </div>
-                    </div>
-                    <div class="how-work__container">
-                        <div class="how-work-item how-work__item">
-                            <img class="how-work-item__img" src="images/how-work/3.svg" alt="">
-                            <div class="how-work-item__text-block">
-                                <div class="how-work-item__title">
-                                    Получение заказа
-                                </div>
-                                <p class="how-work-item__text">
-                                    После получения ответа из официальной базы Росреестра, выписка будет отправлена вам
-                                    на
-                                    почту в форматах <span>PDF, ZIP с ЭЦП Росреестра</span>
-                                </p>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--end how-work-->
-
-        </main>
-        <!--end main-->
-
-    <!--start footer-->
-        <footer class="footer" id="footer">
-            <div class="footer__inner">
-                <div class="footer__container">
-                    <a class="logo footer__logo" href="/">
-                        <img class="logo__img" src="images/logo.svg" alt="">
-                        <span class="logo__text">
-                            Россегрн
-                        </span>
-                    </a>
-                    <div class="footer__text footer__subtitle footer__text--grey">
-                        Заказ выписок из ЕГРН,
-                        предоставление онлайн-сведений
-                    </div>
-                    <a class="footer__link" href="privacy.html">
-                        Обработка персональных данных
-                    </a>
-                    <a class="footer__link" href="oferta.html">
-                        Публичная оферта
-                    </a>
-                </div>
-                <div class="footer__container">
-                    <p class="footer__text">
-                        Время получения выписки: <br>
-                        от 5 минут до 3 суток
-                    </p>
-                    <p class="footer__text footer__text--medium">
-                        Время получения выписки зависит <br>
-                        от скорости обработки запроса Росреестром
-                    </p>
-                    <p class="footer__text">
-                        Если Вы не получили выписку <br>
-                        по прошествии 3 рабочих дней, <br>
-                        мы вернём Вам деньги
-                    </p>
-                </div>
-                <div class="footer__container">
-                    <p class="footer__text">
-                        Техническия поддержка сервиса: <br>
-                        <a class="footer__link" href="mailto:support@rossegrn.info">
-                            support@rossegrn.info
-                        </a>
-                    </p>
-                    <p class="footer__text">
-                        Сервис не является органом государственной власти <br>
-                        или ее ведомственным подразделением.
-                    </p>
-                    <p class="footer__text">
-                        Сервис не изготавливает выписки из ЕГРН, а оказывает <br>
-                        услугу онлайн-заказа выписок из Росреестра.
-                    </p>
-                </div>
-            </div>
-        </footer>
-        <!--end footer-->
-
-    </div>
-    <!--end wrapper-->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/libs.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/basket.js"></script>
-    
-</body>
-
-</html>
+-->
