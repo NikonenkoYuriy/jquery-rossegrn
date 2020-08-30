@@ -11,12 +11,18 @@ $(document).ready(()=>{
 	
 	let sendDataServer = () => {
 		showPopupLoader ();
+		optionsPOST.body = JSON.stringify(userData);
 		getDataAPI( urlCors + url, optionsPOST )
 		.then(result => {
-			saveDataLocalStorage ( 'items', [] )
-			setTimeout(() => {
-				location.href = result.data.payment_url;
-			},0);
+			console.log(result);
+			if (result.success) {
+				saveDataLocalStorage ( 'items', [] )
+				setTimeout(() => {
+					location.href = result.data.payment_url;
+				},0);
+			} else {
+				showErrorMessage ('errorUnknown', result.data.message )
+			}
 		})
 		.catch( error => showErrorMessage ('errorUnknown'))
 		.finally(() => hidePopupLoader () );
@@ -58,7 +64,6 @@ $(document).ready(()=>{
 					};
 				});
 				userData.orders = array;
-				optionsPOST.body = JSON.stringify(userData);
 			}
 			
 			let saveDataLocalStorage = ( key, data ) => {
@@ -250,7 +255,10 @@ $(document).ready(()=>{
 	
 	
 	basketTotalButton.on('click', () => {
+		getUserEmail ();
+		console.log(userData);
 		if (flagPaymentButton) {
+			
 			sendDataServer ();
 		}	
 	});

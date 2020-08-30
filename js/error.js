@@ -16,4 +16,7 @@ let error = {
 	}
 }
 
-let showErrorMessage = (key) => Swal.fire(error[key]);
+let showErrorMessage = (key, message = '') => {
+	if ( message !== '') error[key].text = message;
+	Swal.fire(error[key]);
+}

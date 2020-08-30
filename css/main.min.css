@@ -4958,7 +4958,8 @@ button {
 }
 
 .orders__inner {
-	margin-top: 40px
+	margin-top: 40px;
+	min-height: 200px;
 }
 
 .orders__item {
