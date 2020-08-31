@@ -24,15 +24,11 @@ let updateOrderQuantity = () => {
 updateHeader ();
 updateOrderQuantity ();
 
-
-
 $('.nav-toggle').on('click', function(){
     $(this).toggleClass('opened')
     $('.menu').slideToggle()
     $('.mobile-icons').fadeToggle ()
 });
-
-
 
 $('.basket-tab').on('click', function(e) { 
     e.preventDefault(); 
@@ -44,7 +40,6 @@ $('.basket-tab').on('click', function(e) {
     $('.how-work--last').addClass('dn')
 });
 
-
 $('.tab').on('click', function(e){
     e.preventDefault(); 
   
@@ -55,7 +50,6 @@ $('.tab').on('click', function(e){
     $($(this).attr('href')).addClass('active');
   
   });
-
 
   $('.questions__item-title').on('click', function(){
     $(this).parent().toggleClass('active')
@@ -79,7 +73,6 @@ $('.tab').on('click', function(e){
        }
 });
 
-
 $(document).on('click', function(e) {
     if (!$(e.target).closest(".search-form__input").length) {
       $('.search-form__input-list').hide();
@@ -87,14 +80,6 @@ $(document).on('click', function(e) {
     e.stopPropagation();
   });
 
-
-//$('.search-form__input-list li').click(function () {
-//    $('.address').removeClass('dn')
-//    $('.advantages').addClass('dn')
-//    $('.extracts .container').addClass('dn').removeClass('show-result')
-//    $('.extracts').removeClass('show-result')
-//    $('.search-result').removeClass('show-result')
-//});
 
 
 

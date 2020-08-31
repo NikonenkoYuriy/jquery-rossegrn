@@ -1,4 +1,4 @@
-let validateEmail = ( input ) => {
+let validateEmail = (input) => {
 	let valid = input.validate({
 		rules: {
 			email: {

@@ -6,7 +6,6 @@ let error = {
 	},
 	errorUser: {
 		icon: 'error',
-	    //title: 'Ошибка.',
 	    text: 'По адресу/кадастру не найдено никаких объектов!'
 	},
 	errorUnknown: {

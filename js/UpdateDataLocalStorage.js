@@ -31,27 +31,27 @@ class UpdateDataLocalStorage {
 		})
 		return index;
 	}
-	
-	returnObjectLS ( data ) {
+
+	returnObjectLS(data) {
 		let dataLS = this.getDataLocalStorage();
-		if (dataLS === null ) return undefined;
-		return JSON.parse(dataLS).find( item => item.cadastralNumber === data.cadNum)
+		if (dataLS === null) return undefined;
+		return JSON.parse(dataLS).find(item => item.cadastralNumber === data.cadNum)
 	}
 
 	addDataArrau(data) {
-		
+
 		let index = this.getElementIndex(data);
 		if (index === null) this.data.push(data);
 		else this.data.splice(index, 1, data);
-		
+
 	}
 
 	removeDataArrau(data) {
-		
+
 		let index = this.getElementIndex(data);
 		if (index !== null) this.data.splice(index, 1);
 		this.saveData();
-		
+
 	}
 
 }

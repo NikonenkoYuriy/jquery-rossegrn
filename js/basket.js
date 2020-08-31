@@ -1,133 +1,132 @@
-$(document).ready(()=>{
-	
+$(document).ready(() => {
+
 	let url = 'https://ros.devpreview.info/api/v1/order/create',
 		urlCors = 'https://cors-anywhere.herokuapp.com/';
-		arrayDataLocalStorage = [],
+	arrayDataLocalStorage = [],
 		userData = {
 			email: '',
 			orders: []
 		},
 		total = 0;
-	
+
 	let sendDataServer = () => {
-		showPopupLoader ();
+		showPopupLoader();
 		optionsPOST.body = JSON.stringify(userData);
-		getDataAPI( urlCors + url, optionsPOST )
-		.then(result => {
-			console.log(result);
-			if (result.success) {
-				saveDataLocalStorage ( 'items', [] )
-				setTimeout(() => {
-					location.href = result.data.payment_url;
-				},0);
-			} else {
-				showErrorMessage ('errorUnknown', result.data.message )
-			}
-		})
-		.catch( error => showErrorMessage ('errorUnknown'))
-		.finally(() => hidePopupLoader () );
+		getDataAPI(urlCors + url, optionsPOST)
+			.then(result => {
+				if (result.success) {
+					saveDataLocalStorage('items', [])
+					setTimeout(() => {
+						location.href = result.data.payment_url;
+					}, 0);
+				} else {
+					showErrorMessage('errorUnknown', result.data.message)
+				}
+			})
+			.catch(error => showErrorMessage('errorUnknown'))
+			.finally(() => hidePopupLoader());
 	}
-	
-		let getDataLocalStorage = () => {
-			let data = JSON.parse( localStorage.getItem('items') );
-			if ( data !== null && data.length !== 0 ) {
-				arrayDataLocalStorage = data;
-			}
+
+	let getDataLocalStorage = () => {
+		let data = JSON.parse(localStorage.getItem('items'));
+		if (data !== null && data.length !== 0) {
+			arrayDataLocalStorage = data;
 		}
-		
-			let getTheTotal = () => {
-				arrayDataLocalStorage.forEach( elem => {
-					total += elem.documents.length === 1 ? 249 : 400 ;
-				})
-			}
-			
-			let removeDoc = ( cadNumber, doc ) => {
-				let array = arrayDataLocalStorage.map( elem => {
-					if ( elem.cadastralNumber === cadNumber ) {
-						let index = elem.documents.indexOf(doc);
-						elem.documents.splice(index, 1);
-					}
-					return elem;
-				})
-				.filter( elem => {
-					return elem.documents.length !== 0;
-				});
-				arrayDataLocalStorage = array;
-			}
-			
-			let createNewObject = () => {
-				let array = arrayDataLocalStorage.map( elem => {
-					return {
-						address: elem.address,
-						cad_num: elem.cadastralNumber,
-						documents: elem.documents
-					};
-				});
-				userData.orders = array;
-			}
-			
-			let saveDataLocalStorage = ( key, data ) => {
-				let updateData = new UpdateDataLocalStorage(key, data );
-				updateData.saveData();
-			}
-
-	let basketTotal = $('.basket-total__title-total'),	
-		listBasketInner = $('.list-basket__inner');	
-	
-	let startBasketFunctionality = () => {
-		getDataLocalStorage ();
-		drawBasket ();
-		updateTotal ();
-		updatePaymentButton ();
-		createNewObject ();
 	}
-	
-	listBasketInner.on('click', '.basket-item__button', function (e){
 
-		    removeDoc ( this.dataset.cadNumber, this.dataset.doc );
-		    drawBasket ();
-			total = 0;
-			updateTotal ();
-			saveDataLocalStorage ('items', arrayDataLocalStorage);
-			updateOrderQuantity ();
-			createNewObject ();
-		
+	let getTheTotal = () => {
+		arrayDataLocalStorage.forEach(elem => {
+			total += elem.documents.length === 1 ? 249 : 400;
+		})
+	}
+
+	let removeDoc = (cadNumber, doc) => {
+		let array = arrayDataLocalStorage.map(elem => {
+				if (elem.cadastralNumber === cadNumber) {
+					let index = elem.documents.indexOf(doc);
+					elem.documents.splice(index, 1);
+				}
+				return elem;
+			})
+			.filter(elem => {
+				return elem.documents.length !== 0;
+			});
+		arrayDataLocalStorage = array;
+	}
+
+	let createNewObject = () => {
+		let array = arrayDataLocalStorage.map(elem => {
+			return {
+				address: elem.address,
+				cad_num: elem.cadastralNumber,
+				documents: elem.documents
+			};
+		});
+		userData.orders = array;
+	}
+
+	let saveDataLocalStorage = (key, data) => {
+		let updateData = new UpdateDataLocalStorage(key, data);
+		updateData.saveData();
+	}
+
+	let basketTotal = $('.basket-total__title-total'),
+		listBasketInner = $('.list-basket__inner');
+
+	let startBasketFunctionality = () => {
+		getDataLocalStorage();
+		drawBasket();
+		updateTotal();
+		updatePaymentButton();
+		createNewObject();
+	}
+
+	listBasketInner.on('click', '.basket-item__button', function (e) {
+
+		removeDoc(this.dataset.cadNumber, this.dataset.doc);
+		drawBasket();
+		total = 0;
+		updateTotal();
+		saveDataLocalStorage('items', arrayDataLocalStorage);
+		updateOrderQuantity();
+		createNewObject();
+
 	});
-	
+
 	let updatePaymentButton = () => {
-		getUserEmail ();
+		getUserEmail();
 		updateClassActivePaymentButton();
 	}
-	
+
 	let flagPaymentButton = false,
 		basketTotalButton = $('.basket-total__button');
-	
-		let getUserEmail = () => {
-			let email = JSON.parse( localStorage.getItem("email") );
-			if ( email !== null && email.length !== 0 ) {
-				flagPaymentButton = true;
-				userData.email = email;
-			}
-		}
 
-		let updateClassActivePaymentButton = () => {
-			if (flagPaymentButton) {
-				basketTotalButton.removeAttr('disabled')
-			}	
-		}	
-		
-		let updateTotal = () => {
-			getTheTotal ();
-			drawTotal ();
+	let getUserEmail = () => {
+		let email = JSON.parse(localStorage.getItem("email"));
+		if (email !== null && email.length !== 0) {
+			flagPaymentButton = true;
+			userData.email = email;
 		}
-		
-			let drawTotal = () => {
-				basketTotal.text( total + ' ₽')
-			}
-	
-		let drawBasket = () => {
-			let arrayHTMLElem = arrayDataLocalStorage.map( elem => {
-				return `<div class="basket__inner">
+	}
+
+	let updateClassActivePaymentButton = () => {
+		if (flagPaymentButton) {
+			basketTotalButton.removeAttr('disabled')
+		}
+	}
+
+	let updateTotal = () => {
+		getTheTotal();
+		drawTotal();
+	}
+
+	let drawTotal = () => {
+		basketTotal.text(total + ' ₽')
+	}
+
+	let drawBasket = () => {
+		let arrayHTMLElem = arrayDataLocalStorage.map(elem => {
+			return `<div class="basket__inner">
                         <div class="search-result__number title--underline">
                             ${elem.cadastralNumber}
                             <span class="search-result__type">
@@ -218,32 +217,27 @@ $(document).ready(()=>{
                             </div>
                         </div>
                     </div> `;
-			});
-			listBasketInner.empty();
-			listBasketInner.append(...arrayHTMLElem);
-		}
+		});
+		listBasketInner.empty().append(...arrayHTMLElem);
+	}
 
-	
 	let basketForm = $('.basket__form');
 	let basketFormButton = $('.basket-form__button');
 	let inputEmail = $('input[name="email"]');
-	
-	
-	
-	let validate = validateEmail( basketForm );	
-	
+	let validate = validateEmail(basketForm);
+
 	basketFormButton.on('click', function (e) {
 		let value = inputEmail.val().trim();
-		validate = validateEmail( basketForm );	
-		if ( +validate === 1 && value !== '') {
+		validate = validateEmail(basketForm);
+		if (+validate === 1 && value !== '') {
 			e.preventDefault();
-			saveDataLocalStorage ('email', value );
-			updatePaymentButton ();
+			saveDataLocalStorage('email', value);
+			updatePaymentButton();
 		}
 	});
-	
+
 	let popupLoader = $('.popup-loader'),
-	popupLoaderTitle = $('.popup-loader-title');
+		popupLoaderTitle = $('.popup-loader-title');
 
 	let showPopupLoader = () => {
 		popupLoader.fadeIn(400).css('display', 'flex');
@@ -252,18 +246,14 @@ $(document).ready(()=>{
 	let hidePopupLoader = () => {
 		popupLoader.fadeOut(400);
 	}
-	
-	
+
 	basketTotalButton.on('click', () => {
-		getUserEmail ();
-		console.log(userData);
+		getUserEmail();
 		if (flagPaymentButton) {
-			
-			sendDataServer ();
-		}	
+			sendDataServer();
+		}
 	});
-	
-	
-	startBasketFunctionality ();
-	
+
+	startBasketFunctionality();
+
 });
