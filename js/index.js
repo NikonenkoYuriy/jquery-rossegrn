@@ -1,28 +1,29 @@
 let urlDadata = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address",
 	token = "4c6e33332e10e1bccff49c0cf3f5e7a2326c2755",
-
-	urlDevpreview = 'https://ros.devpreview.info/api/v1/address/get-info',
-	urlCors = 'https://cors-anywhere.herokuapp.com/';
+	
+	urlCors = 'https://cors-anywhere.herokuapp.com/',
+	urlDevpreview = 'https://ros.devpreview.info/api/v1/address/get-info';
 
 optionsPOST.headers.Authorization = "Token " + token;
 
-let stopTimUpdateTitle = null,
+let advantages = $('.advantages'),
+	sampleDocuments = $('.sample-documents'),
+	stopTimUpdateTitle = null,
 	startTitle = 'Производим поиск...',
 	updateTitle = 'Длительное ожидание ответа. Переотправляем запрос…',
 	updateData = new UpdateDataLocalStorage('items');
 
 let getDataDevpreview = (text) => {
-	getDataAPI(urlCors + urlDevpreview + '?' + text, optionsGET)
+	getDataAPI( urlDevpreview + '?' + text, optionsGET)
 		.then((response) => {
+		console.log(response);
 			if (response.success) {
-				showBoxSearchResult(response.data);
-				checkIfThereIsDataInLocalStorage(response.data);
-				createDataDoc(response.data);
-				showDocumentOptions(response.data.allowedDocs);
-
-			} else if (+response.data.status >= 400 && +response.data.status < 500) {
+				showSearchResultPage(response);
+			} 
+			else if (+response.data.status >= 400 && +response.data.status < 500) {
 				showErrorMessage('errorUser');
-			} else if (+response.data.status >= 500) {
+			} 
+			else if (+response.data.status >= 500) {
 				showErrorMessage('serverError');
 			}
 		})
@@ -38,7 +39,7 @@ let getDataAddress = (text) => {
 	optionsPOST.body = JSON.stringify({
 		query: text
 	});
-	getDataAPI(urlDadata, optionsPOST)
+	getDataAPI( urlCors + urlDadata, optionsPOST)
 		.then(result => {
 			let listElem = addListAddress(result.suggestions);
 			updateListAddress(listElem.join(' '));
@@ -88,8 +89,9 @@ let searchFormInput = $('.search-form__input'),
 	flagGetAddress = true;
 
 searchFormInput.on('input', function (e) {
-
+    
 	let value = e.target.value.trim().toLocaleLowerCase();
+	showStartPage ();
 
 	if (value === '') {
 		updateListAddress();
@@ -110,12 +112,34 @@ searchFormInput.on('input', function (e) {
 
 });
 
-searchFormInput.on('focus', function () {
-	searchFormInputList.show();
+let showSearchResultPage = ( response ) => {
+	updateTitlePage( response.data.address );
+	addClassElem(advantages, 'dn');
+	addClassElem(sampleDocuments, 'dn');
+	showBoxSearchResult(response.data);
+	checkIfThereIsDataInLocalStorage(response.data);
+	createDataDoc(response.data);
+	showDocumentOptions(response.data.allowedDocs);
+	scrollPage ();
+}
 
-});
+let showStartPage = () => {
+	removeClassElem(advantages, 'dn');
+	removeClassElem(sampleDocuments, 'dn');
+	updateTitlePage( );
+}
+
+let searchResultInner = $('.search-result__inner'),
+	refBody = $('html, body'),
+	refHeader = $('.header');
+
+let scrollPage = () => {
+	let offsetElem = searchResultInner.offset().top - ( refHeader.height() + 20 );
+	refBody.animate({ scrollTop: offsetElem }, 1000);
+}
 
 searchFormInput.on('input', function () {
+	searchFormInputList.show();
 	hideAdditionalBoxWithInformation();
 });
 
@@ -133,13 +157,27 @@ let updateListAddress = (content = '') => {
 let searchFormButton = $('.search-form__button');
 
 searchFormButton.on('click', (e) => {
+	sendData ();
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.code === 'Enter') {
+		searchFormInputList.hide();
+		e.preventDefault();
+		sendData ();
+	}
+});
+
+let sendData = () => {
 	let value = searchFormInput.val();
-	if (value === '') return;
+	if (value === '') {
+		return;
+	}
 	getDataDevpreview('object=' + encodeURI(value));
 	showPopupLoader();
 	runTextUpdates();
 	updateTitlePopupLoader();
-});
+}
 
 let popupLoader = $('.popup-loader'),
 	popupLoaderTitle = $('.popup-loader-title');
@@ -175,6 +213,7 @@ let showBoxSearchResult = (data) => {
 	$('.search-result_date').text(data.priceDeterminationDate);
 	$('.search-result_permitted-use').text(data.permittedUse);
 	$('.search-result_cadastral-value').text(data.cadastralValue + ' руб.');
+	$('.search-result-regis-date').text(data.registrationDate); 
 
 	searchResult.fadeIn(400);
 }
@@ -322,7 +361,13 @@ let updateBtnAdd = (_this) => {
 	}
 }
 
+let titleElem = $('title');
+
+let updateTitlePage = ( title = "Index" ) => {
+	titleElem.text(title);
+}
 
 let addClassElem = (elem, addClassElem) => elem.addClass(addClassElem);
 
 let removeClassElem = (elem, remClassElem) => elem.removeClass(remClassElem);
+

@@ -1,5 +1,9 @@
-let validateEmail = (input) => {
-	let valid = input.validate({
+let validateEmail = (form) => {
+	jQuery.validator.setDefaults({
+		debug: true,
+	});
+
+	form.validate({
 		rules: {
 			email: {
 				required: true,
@@ -13,5 +17,5 @@ let validateEmail = (input) => {
 			}
 		}
 	});
-	return valid.currentElements.length;
+	
 }

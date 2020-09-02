@@ -1760,7 +1760,13 @@ button {
 	.search-form__input-list li {
 		padding-left: 10px;
 		font-size: 14px;
-		line-height: 22px
+		line-height: 22px;
+	}
+	.search-form__input-list li:first-child {
+		padding-top: 10px;
+	}
+	.search-form__input-list li:last-child {
+		padding-bottom: 10px;
 	}
 }
 
@@ -1781,12 +1787,6 @@ button {
 @media (max-width: 768px) {
 	.search-form__input-list {
 		width: calc(100% + 63px)
-	}
-}
-
-@media (max-width: 600px) {
-	.search-form__input-list {
-		padding: 19px 6px 13px 0
 	}
 }
 

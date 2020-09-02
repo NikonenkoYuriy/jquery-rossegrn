@@ -1,3 +1,9 @@
+let countDocuments = ( items ) => {
+	let quantity = 0;
+	items.forEach( item => quantity += item.documents.length );
+	return quantity;
+}
+
 let header = $('#header');
 
 $(window).scroll(function () {
@@ -12,13 +18,16 @@ let updateHeader = () => {
 let basketTotal = $('.basket-mobile__total');
 
 let updateOrderQuantity = () => {
-	let items = JSON.parse (localStorage.getItem('items'));
+	
+	let	items = JSON.parse (localStorage.getItem('items'));
+	
 	if ( items !== null && items.length !== 0 ) {
-		basketTotal.text(items.length);
-		basketTotal.removeClass('dn');
+		let quantity = countDocuments ( items ); 
+		basketTotal.text(quantity).removeClass('dn');
 	} else {
 		basketTotal.addClass('dn');
 	}
+	
 }
 
 updateHeader ();

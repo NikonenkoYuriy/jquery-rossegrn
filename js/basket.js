@@ -1,7 +1,7 @@
 $(document).ready(() => {
 
-	let url = 'https://ros.devpreview.info/api/v1/order/create',
-		urlCors = 'https://cors-anywhere.herokuapp.com/';
+	let url = 'https://ros.devpreview.info/api/v1/order/create';
+		
 	arrayDataLocalStorage = [],
 		userData = {
 			email: '',
@@ -12,7 +12,7 @@ $(document).ready(() => {
 	let sendDataServer = () => {
 		showPopupLoader();
 		optionsPOST.body = JSON.stringify(userData);
-		getDataAPI(urlCors + url, optionsPOST)
+		getDataAPI(url, optionsPOST)
 			.then(result => {
 				if (result.success) {
 					saveDataLocalStorage('items', [])
@@ -221,20 +221,24 @@ $(document).ready(() => {
 		listBasketInner.empty().append(...arrayHTMLElem);
 	}
 
-	let basketForm = $('.basket__form');
-	let basketFormButton = $('.basket-form__button');
-	let inputEmail = $('input[name="email"]');
-	let validate = validateEmail(basketForm);
-
+	let basketForm = $('.basket__form'),
+		basketFormButton = $('.basket-form__button'),
+		inputEmail = $('input[name="email"]');
+	
+	validateEmail(basketForm);
+	
 	basketFormButton.on('click', function (e) {
+		updateEmailStorage ( e );
+	});
+	
+	let updateEmailStorage = ( e ) => {
 		let value = inputEmail.val().trim();
-		validate = validateEmail(basketForm);
-		if (+validate === 1 && value !== '') {
-			e.preventDefault();
+		if ( inputEmail.hasClass('valid') ) {
 			saveDataLocalStorage('email', value);
 			updatePaymentButton();
-		}
-	});
+		} 
+		
+	}	
 
 	let popupLoader = $('.popup-loader'),
 		popupLoaderTitle = $('.popup-loader-title');

@@ -1,7 +1,6 @@
 $(document).ready(() => {
 
-	let urlCors = 'https://cors-anywhere.herokuapp.com/',
-		urlList = 'https://ros.devpreview.info/api/v1/order/list',
+	let	urlList = 'https://ros.devpreview.info/api/v1/order/list',
 		urlPayment = 'https://ros.devpreview.info/api/v1/order/payment',
 		urlCancel = 'https://ros.devpreview.info/api/v1/order/cancel',
 		userEmail = null;
@@ -18,8 +17,9 @@ $(document).ready(() => {
 	let getDataOrders = () => {
 		if (userEmail === null) return;
 		showPopupLoader();
-		getDataAPI(urlCors + urlList + '?email=' + userEmail, optionsGET)
+		getDataAPI( urlList + '?email=' + userEmail, optionsGET)
 			.then((response) => {
+			console.log(response);
 				if (response.success) {
 					analysisResponseFromServer(response.data);
 				} else {
@@ -32,7 +32,7 @@ $(document).ready(() => {
 
 	let payForOrder = (id) => {
 		showPopupLoader();
-		getDataAPI(urlCors + urlPayment + '?email=' + userEmail + '&id=' + id, optionsGET)
+		getDataAPI( urlPayment + '?email=' + userEmail + '&id=' + id, optionsGET)
 			.then((response) => {
 				if (response.success) {
 					location.href = response.data.payment_url;
@@ -50,7 +50,7 @@ $(document).ready(() => {
 			email: userEmail
 		});
 		showPopupLoader();
-		getDataAPI(urlCors + urlCancel, optionsPOST)
+		getDataAPI(urlCancel, optionsPOST)
 			.then((response) => {
 				if (response.success) {
 					addClassElem($(`.order${response.data.cart_id}`), 'dn');
@@ -67,24 +67,27 @@ $(document).ready(() => {
 		updateData.saveData();
 	}
 
-
 	let orderLoginForm = $('.order-login__form'),
 		orderLoginInput = $('.order-login__input'),
-		orderLoginButton = $('.order-login__button');
-
-	let validate = validateEmail(orderLoginForm);
+		orderLoginButton = $('.order-login__button'),
+		flagActiveInput = false;
+	
+	validateEmail(orderLoginForm);
 
 	orderLoginButton.on('click', function (e) {
-
+		updateEmailStorage ( e );
+	});
+	
+	let updateEmailStorage = ( e ) => {
 		let value = orderLoginInput.val().trim();
-		validate = validateEmail(orderLoginForm);
-		if (+validate === 1 && value !== '') {
-			e.preventDefault();
+		if ( orderLoginInput.hasClass('valid') ) {
 			saveDataLocalStorage('email', value);
 			updatePageOrders();
-		}
-	});
-
+			orderLoginInput.val('');
+		} 
+		
+	}
+	
 	let boxs = $('.js-box');
 
 	let updateBoxPage = () => {
@@ -128,6 +131,7 @@ $(document).ready(() => {
 	let createMarkup = (data) => {
 		let arrayHTML = data.map(elem => {
 			let item = '';
+			
 			if (+elem.status === 10) {
 				item = $(`<div class="order-item orders__item order-item--wait order${elem.id}">
                             <div class="order-item__text-block">
@@ -169,7 +173,9 @@ $(document).ready(() => {
 									${obj.doc_type_label}
 								 </div>`));
 				});
-			} else if (+elem.status === 20 || +elem.status === 30) {
+			} 
+			
+			else if (+elem.status === 20 || +elem.status === 30) {
 				item = $(`<div class="order-item orders__item order-item--completed order${elem.id}">
                             <div class="order-item__text-block">
                                 <div class="order-item__title">
@@ -214,7 +220,9 @@ $(document).ready(() => {
 									  </div>
 								   </div>`));
 				});
-			} else if (+elem.status === 40) {
+			} 
+			
+			else if (+elem.status === 40) {
 				let arrayLinks = [];
 				elem.orders[0].order_items.forEach(obj => {
 					arrayLinks.push(obj.result_pdf, obj.result_zip);
@@ -242,6 +250,7 @@ $(document).ready(() => {
                             </div>
                         </div>`;
 			}
+			
 			return item;
 		});
 		ordersInner.empty().append(...arrayHTML);
