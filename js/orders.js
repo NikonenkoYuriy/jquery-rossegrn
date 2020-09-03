@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-	let	urlList = 'https://ros.devpreview.info/api/v1/order/list',
+	let urlList = 'https://ros.devpreview.info/api/v1/order/list',
 		urlPayment = 'https://ros.devpreview.info/api/v1/order/payment',
 		urlCancel = 'https://ros.devpreview.info/api/v1/order/cancel',
 		userEmail = null;
@@ -17,9 +17,9 @@ $(document).ready(() => {
 	let getDataOrders = () => {
 		if (userEmail === null) return;
 		showPopupLoader();
-		getDataAPI( urlList + '?email=' + userEmail, optionsGET)
+		getDataAPI(urlList + '?email=' + userEmail, optionsGET)
 			.then((response) => {
-			console.log(response);
+				console.log(response);
 				if (response.success) {
 					analysisResponseFromServer(response.data);
 				} else {
@@ -32,7 +32,7 @@ $(document).ready(() => {
 
 	let payForOrder = (id) => {
 		showPopupLoader();
-		getDataAPI( urlPayment + '?email=' + userEmail + '&id=' + id, optionsGET)
+		getDataAPI(urlPayment + '?email=' + userEmail + '&id=' + id, optionsGET)
 			.then((response) => {
 				if (response.success) {
 					location.href = response.data.payment_url;
@@ -61,6 +61,16 @@ $(document).ready(() => {
 			.catch(error => showErrorMessage('errorUnknown'))
 			.finally(() => hidePopupLoader());
 	}
+	
+	let createAnArrayFileLinks = (elem) => {
+		let array = [];
+		elem.orders.forEach((order, index) => {
+			order.order_items.forEach(obj => {
+				array.push(obj.result_pdf, obj.result_zip)
+			});
+		});
+		return array;
+	}
 
 	let saveDataLocalStorage = (key, data) => {
 		let updateData = new UpdateDataLocalStorage(key, data);
@@ -71,23 +81,25 @@ $(document).ready(() => {
 		orderLoginInput = $('.order-login__input'),
 		orderLoginButton = $('.order-login__button'),
 		flagActiveInput = false;
-	
+
 	validateEmail(orderLoginForm);
 
 	orderLoginButton.on('click', function (e) {
-		updateEmailStorage ( e );
+		updateEmailStorage(e);
 	});
-	
-	let updateEmailStorage = ( e ) => {
+
+	let updateEmailStorage = (e) => {
 		let value = orderLoginInput.val().trim();
-		if ( orderLoginInput.hasClass('valid') ) {
+		if (orderLoginInput.hasClass('valid')) {
 			saveDataLocalStorage('email', value);
 			updatePageOrders();
 			orderLoginInput.val('');
-		} 
-		
+		}
+
 	}
 	
+	let noLinks = (elem) => elem === null;
+
 	let boxs = $('.js-box');
 
 	let updateBoxPage = () => {
@@ -130,8 +142,8 @@ $(document).ready(() => {
 
 	let createMarkup = (data) => {
 		let arrayHTML = data.map(elem => {
-			let item = '';
-			
+			let item = null;
+
 			if (+elem.status === 10) {
 				item = $(`<div class="order-item orders__item order-item--wait order${elem.id}">
                             <div class="order-item__text-block">
@@ -155,28 +167,36 @@ $(document).ready(() => {
                                     </button>
                                 </div>
                             </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    ${elem.orders[0].cad_num} br <span class="order-item__info-title--type">
+                        </div>`);
+				let orders = elem.orders.map(order => {
+					return $(`<div class="order-item__info">
+                       	   		<div class="order-item__info-title">
+                                    ${order.cad_num} br <span class="order-item__info-title--type">
 									</span>
                                 </div>
-                                <div class="order-item__address">
-                                     ${elem.orders[0].address}
-                                </div>
-                                <div class="order-item__list">
-                                </div>
-                            </div>
-                        </div>`)
-				elem.orders[0].order_items.forEach(obj => {
-					item.find('.order-item__list').append($(`
+								 <div class="order-item__address">
+									${order.address}
+								 </div>
+                             <div class="order-item__list"></div>
+                        	</div>`);
+				});
+				item.append(...orders);
+				elem.orders.forEach((order, index) => {
+					order.order_items.forEach(obj => {
+						item.find('.order-item__list').eq(index).append($(`
 								<div class="order-item__list-item">
 									${obj.doc_type_label}
 								 </div>`));
+					});
 				});
-			} 
-			
-			else if (+elem.status === 20 || +elem.status === 30) {
-				item = $(`<div class="order-item orders__item order-item--completed order${elem.id}">
+			} else if (+elem.status === 20 || +elem.status === 30) {
+				
+				let arrayLinks = createAnArrayFileLinks ( elem ),
+					isLinks = !arrayLinks.every(noLinks);
+				
+				console.log(isLinks);
+				
+				item = $(`<div class="order-item orders__item ${isLinks ? 'order-item--completed' : ''} order${elem.id}">
                             <div class="order-item__text-block">
                                 <div class="order-item__title">
                                     Заказ № ${elem.id} <br>
@@ -186,71 +206,76 @@ $(document).ready(() => {
                                     <span class="order-item__title-status">
 										${elem.status_label}
 									</span>
-                                </div>
-                                <div class="order-item__button-block">
-                                    <button class="button order-item__download-all download-all" data-order="">
-                                        скачать все выписки
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    ${elem.orders[0].cad_num} br 
-									<span class="order-item__info-title--type">
-									</span>
-                                </div>
-                                <div class="order-item__address">
-                                    ${elem.orders[0].address}
-                                </div>
-                                <div class="order-item__list">
-                                </div>
-                            </div>
-                        </div>`);
-				elem.orders[0].order_items.forEach(obj => {
-					item.find('.order-item__list').append($(`
+                                </div>   
+								${isLinks ? `
+									<div class="order-item__button-block">
+										<button class="button order-item__download-all download-all" data-order="">
+											скачать все выписки
+										</button>
+									</div>` : ''} 
+                            </div>`);
+
+				let orders = elem.orders.map(order => {
+					return $(`<div class="order-item__info">
+							<div class="order-item__info-title">
+								${order.cad_num} br 
+									<span class="order-item__info-title--type"></span>
+									</div>
+									<div class="order-item__address">
+										${order.address}
+									</div>
+									<div class="order-item__list">
+									</div>
+								</div>
+							</div>`);
+				});
+				item.append(...orders);
+				elem.orders.forEach((order, index) => {
+					order.order_items.forEach(obj => {
+						item.find('.order-item__list').eq(index).append($(`
 								<div class="order-item__list-item">
 									${obj.doc_type_label}
 									<div class="order-item__list-item-buttons">
-										<a href="${obj.result_pdf}" class="order-item__list-item-download" download>
+										${obj.result_pdf !== null ? `<a href="${obj.result_pdf}" class="order-item__list-item-download" download>
 											pdf
-										 </a>
-										 <a href="${obj.result_zip}" class="order-item__list-item-download" download>
-											Zip
-										 </a>
+										 </a>`: ''}
+										 ${obj.result_zip !== null ? `<a href="${obj.result_zip}" class="order-item__list-item-download" download>
+											pdf
+										 </a>`: ''}
 									  </div>
 								   </div>`));
+					});
 				});
-			} 
-			
-			else if (+elem.status === 40) {
-				let arrayLinks = [];
-				elem.orders[0].order_items.forEach(obj => {
-					arrayLinks.push(obj.result_pdf, obj.result_zip);
-				});
-				item = `<div class="order-item orders__item order-item--closed order${elem.id}">
+			} else if (+elem.status === 40) {
+				let arrayLinks = createAnArrayFileLinks ( elem );
+				item = $(`<div class="order-item orders__item order-item--closed order${elem.id}">
                             <div class="order-item__text-block">
                                 <div class="order-item__title">
                                     Заказ № ${elem.id} <br>
                                     <span class="order-item__title-date">${elem.created_at}</span>
                                     <span class="order-item__title-status">${elem.status_label}</span>
-                                </div>
-                                <div class="order-item__button-block">
-                                    <button class="button order-item__download-all download-all-links" data-links="${arrayLinks}">
-                                        скачать все выписки
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="order-item__info">
-                                <div class="order-item__info-title">
-                                    ${elem.orders[0].id} br <span class="order-item__info-title--type"></span>
-                                </div>
-                                <div class="order-item__address">
-                                    ${elem.orders[0].address}
-                                </div>
-                            </div>
-                        </div>`;
+                                </div>`+
+//                                <div class="order-item__button-block">
+//                                    <button class="button order-item__download-all download-all-links" data-links="${arrayLinks}">
+//                                        скачать все выписки
+//                                    </button>
+//                                </div>
+                            `</div>    
+                        </div>`);
+
+				let elems = elem.orders.map((order, index) => {
+					return $(`<div class="order-item__info">
+                                		<div class="order-item__info-title">
+                                    		${order.cad_num} br <span class="order-item__info-title--type"></span>
+                                		</div>
+									<div class="order-item__address">
+										${order.address}
+									</div>
+								</div>`)
+				});
+				item.append(...elems);
 			}
-			
+
 			return item;
 		});
 		ordersInner.empty().append(...arrayHTML);
@@ -293,8 +318,7 @@ $(document).ready(() => {
 		saveDataLocalStorage('email', []);
 		ordersInner.empty();
 		updatePageOrders();
-	})
-
+	});
 
 	let addClassElem = (elem, addClassElem) => elem.addClass(addClassElem);
 

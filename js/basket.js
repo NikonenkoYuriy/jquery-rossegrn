@@ -106,6 +106,7 @@ $(document).ready(() => {
 		if (email !== null && email.length !== 0) {
 			flagPaymentButton = true;
 			userData.email = email;
+			addUserEmailToInput(email);
 		}
 	}
 
@@ -238,7 +239,11 @@ $(document).ready(() => {
 			updatePaymentButton();
 		} 
 		
-	}	
+	}
+	
+	function addUserEmailToInput (email) {
+		inputEmail.val(email);
+	}
 
 	let popupLoader = $('.popup-loader'),
 		popupLoaderTitle = $('.popup-loader-title');

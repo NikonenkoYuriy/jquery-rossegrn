@@ -342,7 +342,6 @@ let hideAdditionalBoxWithInformation = () => {
 
 }
 
-
 extractFormButtonAdd.on('click', function () {
 	if (onClickBtn) {
 		updateBtnAdd($(this));
