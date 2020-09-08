@@ -18,7 +18,10 @@ let getDataDevpreview = (text) => {
 		.then((response) => {
 		console.log(response);
 			if (response.success) {
-				showSearchResultPage(response);
+				
+				/*------------------------------*/
+				defineWhichBlockToShow(response);			
+				/*------------------------------*/
 			} 
 			else if (+response.data.status >= 400 && +response.data.status < 500) {
 				showErrorMessage('errorUser');
@@ -112,41 +115,72 @@ searchFormInput.on('input', function (e) {
 
 });
 
-let showSearchResultPage = ( response ) => {
-	updateTitlePage( response.data.address );
-	addClassElem(advantages, 'dn');
-	addClassElem(sampleDocuments, 'dn');
-	showBoxSearchResult(response.data);
-	checkIfThereIsDataInLocalStorage(response.data);
-	createDataDoc(response.data);
-	showDocumentOptions(response.data.allowedDocs);
-	scrollPage ();
+/*------------------------------*/
+let defineWhichBlockToShow = ( { data } ) => {
+	if ( Array.isArray(data)) {
+		showBlockAddress(data)
+	} else {
+		showSearchResultPage ( data )
+	}
 }
 
+let addressList = $('.address__list'),
+	address = $('.address');
+
+let showBlockAddress = ( data ) => {
+	hideBlockPage ();
+	createMarkupBlockAddresses (data);
+	removeClassElem(address, 'dn');
+	scrollPage (address);
+}
+
+addressList.on('click', '.address__list-item', function (){
+	let cadnum = this.dataset.cadnum; 
+	sendDataServer (cadnum);
+	updateInputAddress(cadnum);
+})
+
+let searchResultInner = $('.search-result__inner');
+
+let showSearchResultPage = ( data ) => {
+	addClassElem(address, 'dn');
+	updateTitlePage( data.address );
+	hideBlockPage ();
+	showBoxSearchResult(data);
+	checkIfThereIsDataInLocalStorage(data);
+	createDataDoc(data);
+	showDocumentOptions(data.allowedDocs);
+	scrollPage (searchResultInner);
+}
+
+let hideBlockPage = () => {
+	addClassElem(advantages, 'dn');
+	addClassElem(sampleDocuments, 'dn');
+}
+/*------------------------------*/
 let showStartPage = () => {
+	addClassElem(address, 'dn');
 	removeClassElem(advantages, 'dn');
 	removeClassElem(sampleDocuments, 'dn');
 	updateTitlePage( );
 }
 
-let searchResultInner = $('.search-result__inner'),
-	refBody = $('html, body'),
+let	refBody = $('html, body'),
 	refHeader = $('.header');
-
-let scrollPage = () => {
-	let offsetElem = searchResultInner.offset().top - ( refHeader.height() + 20 );
+/*------------------------------*/
+let scrollPage = ( elem ) => {
+	let offsetElem = elem.offset().top - ( refHeader.height() + 20 );
 	refBody.animate({ scrollTop: offsetElem }, 1000);
 }
-
+/*------------------------------*/
 searchFormInput.on('input', function () {
 	searchFormInputList.show();
 	hideAdditionalBoxWithInformation();
 });
 
 searchFormInputList.on('click', 'li', (e) => {
-	searchFormInput.val($(e.target).text());
+	updateInputAddress($(e.target).text());
 });
-
 
 let updateListAddress = (content = '') => {
 	let value = searchFormInput.val().trim();
@@ -173,10 +207,14 @@ let sendData = () => {
 	if (value === '') {
 		return;
 	}
+	sendDataServer (value);
+}
+
+let sendDataServer = (value) => {
 	getDataDevpreview('object=' + encodeURI(value));
 	showPopupLoader();
 	runTextUpdates();
-	updateTitlePopupLoader();
+	updateTitlePopupLoader()
 }
 
 let popupLoader = $('.popup-loader'),
@@ -365,8 +403,31 @@ let titleElem = $('title');
 let updateTitlePage = ( title = "Index" ) => {
 	titleElem.text(title);
 }
-
+/*------------------------------*/
+let updateInputAddress = (value) => {
+	searchFormInput.val(value)
+}
+/*------------------------------*/
 let addClassElem = (elem, addClassElem) => elem.addClass(addClassElem);
 
 let removeClassElem = (elem, remClassElem) => elem.removeClass(remClassElem);
 
+/*------------------------------*/
+let titleAddress = `<li class="address__title">
+                    	Уточните адрес
+                    </li>`;
+
+let createMarkupBlockAddresses = ( data ) => {
+	let markup = data.map( elem => {
+		return `<li class="address__list-item"
+				data-cadnum="${elem.cadNum}">
+                   ${elem.address}         
+                 	<span class="address__list-item-number">
+                    	${elem.cadNum}
+                    </span>
+                </li>`;
+	});
+	markup.unshift(titleAddress);
+	addressList.empty().append(...markup);
+}
+/*------------------------------*/
